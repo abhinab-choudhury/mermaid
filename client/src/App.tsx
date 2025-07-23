@@ -1,68 +1,75 @@
-import { useState } from 'react'
-import beaver from './assets/beaver.svg'
-import { Button } from './components/ui/button'
-import { hcWithType } from 'server/dist/client'
+// import { hcWithType } from "server/dist/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Home from "./pages/Home";
+import AppLayout from "./components/layout/app-layout";
+import About from "./pages/About";
+import Chat from "./pages/Chat";
+import Setting from "./pages/Setting";
+import { ThemeProvider } from "./provider/theme-provider";
+import { Button } from "./components/ui/button";
+import { Switch } from "./components/ui/switch";
+import useTheme from "./hook/useTheme";
+import { Theme } from "./type";
+import { ModeToggle } from "./components/toggle-theme-btn";
+import SignInBtn from "./components/signin-btn";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000"
+// const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
-const client = hcWithType(SERVER_URL);
+// const client = hcWithType(SERVER_URL);
 
-type ResponseType = Awaited<ReturnType<typeof client.hello.$get>>;
+// type ResponseType = Awaited<ReturnType<typeof client.hello.$get>>;
 
 function App() {
-  const [data, setData] = useState<Awaited<ReturnType<ResponseType["json"]>> | undefined>()
+  // const [data, setData] = useState<Awaited<ReturnType<ResponseType["json"]>> | undefined>()
 
-  async function sendRequest() {
-    try {
-      const res = await client.hello.$get()
-      if (!res.ok) {
-        console.log("Error fetching data")
-        return
-      }
-      const data = await res.json()
-      setData(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // async function sendRequest() {
+  //   try {
+  //     const res = await client.hello.$get()
+  //     if (!res.ok) {
+  //       console.log("Error fetching data")
+  //       return
+  //     }
+  //     const data = await res.json()
+  //     setData(data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  const { theme, setTheme } = useTheme();
+  const toggleTheme = () =>
+    theme === "light" ? setTheme("dark") : setTheme("light");
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      Component: AppLayout,
+      children: [
+        { index: true, Component: Home },
+        { path: "about", Component: About },
+        { path: "setting", Component: Setting },
+        {
+          path: "c",
+          children: [{ index: true, path: ":chatid", Component: Chat }],
+        },
+        {
+          path: "h",
+          children: [{ index: true, path: ":historyid", Component: Chat }],
+        },
+      ],
+    },
+  ]);
 
   return (
-    <div className="max-w-xl mx-auto flex flex-col gap-6 items-center justify-center min-h-screen">
-      <a href="https://github.com/stevedylandev/bhvr" target="_blank">
-        <img
-          src={beaver}
-          className="w-16 h-16 cursor-pointer"
-          alt="beaver logo"
-        />
-      </a>
-      <h1 className="text-5xl font-black">bhvr</h1>
-      <h2 className="text-2xl font-bold">Bun + Hono + Vite + React</h2>
-      <p>A typesafe fullstack monorepo</p>
-      <div className='flex items-center gap-4'>
-        <Button
-          onClick={sendRequest}
-        >
-          Call API
-        </Button>
-        <Button
-          variant='secondary'
-          asChild
-        >
-          <a target='_blank' href="https://bhvr.dev">
-          Docs
-          </a>
-        </Button>
-      </div>
-        {data && (
-          <pre className="bg-gray-100 p-4 rounded-md">
-            <code>
-            Message: {data.message} <br />
-            Success: {data.success.toString()}
-            </code>
-          </pre>
-        )}
-    </div>
-  )
+    <>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <div className="absolute flex gap-3 top-5 right-3 z-10">
+          <SignInBtn />
+          <ModeToggle />
+        </div>
+      </ThemeProvider>
+    </>
+  );
 }
 
-export default App
+export default App;
