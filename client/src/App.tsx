@@ -6,10 +6,6 @@ import About from "./pages/About";
 import Chat from "./pages/Chat";
 import Setting from "./pages/Setting";
 import { ThemeProvider } from "./provider/theme-provider";
-import { Button } from "./components/ui/button";
-import { Switch } from "./components/ui/switch";
-import useTheme from "./hook/useTheme";
-import { Theme } from "./type";
 import { ModeToggle } from "./components/toggle-theme-btn";
 import SignInBtn from "./components/signin-btn";
 
@@ -35,9 +31,6 @@ function App() {
   //     console.log(error)
   //   }
   // }
-  const { theme, setTheme } = useTheme();
-  const toggleTheme = () =>
-    theme === "light" ? setTheme("dark") : setTheme("light");
 
   const router = createBrowserRouter([
     {
