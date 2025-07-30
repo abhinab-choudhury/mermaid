@@ -22,6 +22,17 @@ While there are plenty of existing app building stacks out there, many of them a
 
 ## Project Structure
 
+Diagram:
+``` mermaid
+stateDiagram-v2
+[*] --> Still
+Still --> [*]
+Still --> Moving
+Moving --> Still
+Moving --> Crash
+Crash --> [*]
+```
+
 ```
 .
 ├── client/               # React frontend

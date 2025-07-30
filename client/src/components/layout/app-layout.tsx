@@ -26,7 +26,7 @@ export default function AppLayout() {
       <aside
         className={`${
           isOpen ? "w-64 absolute z-10 h-dvh" : "w-16"
-        } ${isAuthenticated ? "block" : "hidden"} flex flex-col border-r bg-white transition-all duration-300 ease-in-out`}
+        } ${isAuthenticated ? "block" : "hidden"} flex flex-col border-r bg-white dark:bg-gray-950 transition-all duration-300 ease-in-out`}
       >
         <div className="flex h-16 items-center justify-between border-b px-4">
           <Link
