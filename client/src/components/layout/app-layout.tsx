@@ -1,140 +1,139 @@
-import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import { Button } from "@/components/ui/button";
+import {
+  PlusCircle,
+  BadgeInfo,
+  Package,
+  ChevronRight,
+  Settings,
+  Search,
+} from "lucide-react";
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import {
   Collapsible,
-  CollapsibleContent,
   CollapsibleTrigger,
+  CollapsibleContent,
 } from "@/components/ui/collapsible";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  ChevronRight,
-  Menu,
-  Package,
-  Settings,
-  BadgeInfo,
-  PlusCircle,
-} from "lucide-react";
 import useAuth from "@/hook/useAuth";
 
-export default function AppLayout() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function AppSidebar() {
   const { isAuthenticated } = useAuth();
+  // Product details
+  const product = {
+    name: "Mermaid",
+    logo: "logo.svg", // Update with your logo path
+  };
+
+  // Main navigation items
+  const navItems = [
+    { title: "New", icon: PlusCircle, url: "c/" },
+    { title: "About", icon: BadgeInfo, url: "about" },
+    { title: "Search", icon: Search, url: "" },
+  ];
+
+  // History items
+  const historyItems = [
+    "How Authentication in CLI Works?",
+    "How to add DNS?",
+    "How NFT Works??",
+    "Another history example item",
+  ];
+
+  // Settings item
+  const settingsItem = { title: "Settings", icon: Settings, url: "setting" };
+
+  if (!isAuthenticated) {
+    // Show public layout (no sidebar, maybe centered content)
+    return (
+      <div className="flex flex-col min-h-screen items-center justify-center">
+        <Outlet />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-screen dark:bg-gray-950">
-      <aside
-        className={`${
-          isOpen ? "w-64 absolute z-10 h-dvh" : "w-16"
-        } ${isAuthenticated ? "block" : "hidden"} flex flex-col border-r bg-white dark:bg-gray-950 transition-all duration-300 ease-in-out`}
-      >
-        <div className="flex h-16 items-center justify-between border-b px-4">
-          <Link
-            to={""}
-            className={`${isOpen ? "block" : "hidden"} text-lg font-semibold`}
-          >
-            Mermaid
-          </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
-        </div>
-        <ScrollArea className="flex-1">
-          <nav className="p-2">
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link to={"c/"}>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {isOpen && "New"}
-              </Link>
-            </Button>
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link to={"about"}>
-                <BadgeInfo className="mr-2 h-4 w-4" />
-                {isOpen && "About"}
-              </Link>
-            </Button>
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full justify-start">
-                  <Package className="mr-2 h-4 w-4" />
-                  {isOpen && (
-                    <>
-                      History
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent className="bg-white dark:bg-gray-950">
+          {/* Logo */}
+          <div className="flex items-center gap-2 p-4 border-b">
+            <img src={product.logo} alt={product.name} className="h-8 w-8" />
+            <span className="text-lg font-semibold">{product.name}</span>
+          </div>
+
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {/* Main navigation */}
+                {navItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link to={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+
+                {/* History collapsible */}
+                <Collapsible>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton>
+                      <Package className="h-4 w-4" />
+                      <span>History</span>
                       <ChevronRight className="ml-auto h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-              {isOpen && (
-                <CollapsibleContent className="ml-2 space-y-1 overflow-y-auto max-h-[70vh]">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
-                    <span className="inline-block truncate max-w-[200px]">
-                      How Authentication inoi uh iuwekj iu iudu;Works in CLI?
-                    </span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
-                    <span className="inline-block truncate max-w-[200px]">
-                      How Authentication inoi uh iuwekj iu iudu;Works in CLI?
-                    </span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
-                    <span className="inline-block truncate max-w-[200px]">
-                      How to add DNS?
-                    </span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
-                    <span className="inline-block truncate max-w-[200px]">
-                      How NFT Works??
-                    </span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
-                    <span className="inline-block truncate max-w-[200px]">
-                      How Authentication Works in CLI?
-                    </span>
-                  </Button>
-                </CollapsibleContent>
-              )}
-            </Collapsible>
-          </nav>
-        </ScrollArea>
-        <Button
-          asChild
-          variant="ghost"
-          className="w-full justify-start rounded-none"
-        >
-          <Link to={"setting"}>
-            <Settings className="ml-2 h-4 w-4" />
-            {isOpen && "Settings"}
-          </Link>
-        </Button>
-      </aside>
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="ml-2 space-y-1 overflow-y-auto max-h-[70vh]">
+                    {historyItems.map((historyItem, index) => (
+                      <SidebarMenuItem key={index}>
+                        <SidebarMenuButton
+                          size="sm"
+                          className="w-full justify-start text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
+                        >
+                          <span className="inline-block truncate max-w-[200px]">
+                            {historyItem}
+                          </span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        {/* Settings */}
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to={settingsItem.url}>
+                <settingsItem.icon className="h-4 w-4" />
+                <span>{settingsItem.title}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </Sidebar>
+
+      {/* Main content */}
       <main className="flex-1">
+        <div className="relative inline">
+          <SidebarTrigger className="absolute bg-white dark:bg-gray-900" />
+        </div>
         <Outlet />
       </main>
-    </div>
+    </SidebarProvider>
   );
 }

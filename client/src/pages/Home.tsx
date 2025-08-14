@@ -2,10 +2,10 @@ import { ArrowRightIcon } from "lucide-react";
 
 function Home() {
   return (
-    <section className="h-full w-full flex flex-col justify-center items-center bg-gray-300/10 dark:bg-gray-900">
-      <div className="rounded-2xl flex flex-col justify-center items-center w-[80vw] h-[80vh]">
+    <section className="h-full w-full flex flex-col justify-center items-center bg-gray-100/40 dark:bg-gray-900">
+      <div className="rounded-2xl flex flex-col justify-center items-center h-[100%]">
         <h1 className="text-3xl font-extralight">Mermaid</h1>
-        <p className="pt-3">
+        <p className="pt-3 text-center">
           AI Which helps you wite Mermaid code, comes with a built in render
         </p>
       </div>
