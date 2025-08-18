@@ -1,16 +1,20 @@
 import { ArrowRightIcon } from "lucide-react";
+import { Link } from "react-router";
 
 function Home() {
   return (
-    <section className="h-full w-full flex flex-col justify-center items-center bg-gray-100/40 dark:bg-gray-900">
+    <section className="h-dvh w-full flex flex-col justify-center items-center bg-gray-100/40 dark:bg-gray-900/60">
       <div className="rounded-2xl flex flex-col justify-center items-center h-[100%]">
         <h1 className="text-3xl font-extralight">Mermaid</h1>
-        <p className="pt-3 text-center">
+        <p className="p-2 md:pt-3 text-center text-sm">
           AI Which helps you wite Mermaid code, comes with a built in render
         </p>
+        <Link to="/about" className="underline">
+          /about
+        </Link>
       </div>
-      <div className="absolute border border-gray-950 bottom-0 rounded-tr-2xl rounded-tl-2xl w-[80%] md:w-[45vw] bg-gray-100 dark:bg-gray-950 pt-4 px-4">
-        <form className="flex flex-row gap-3 bg-gray-200 dark:bg-primary/5 p-3 rounded-sm">
+      <div className="absolute border border-gray-950 bottom-0 rounded-tr-2xl rounded-tl-2xl w-[90%] md:w-[45vw] bg-gray-100 dark:bg-gray-950 pt-1 px-1 md:pt-4 md:px-4">
+        <form className="flex flex-row gap-3 bg-gray-200 dark:bg-primary/5 p-3 rounded-t-xl md:rounded-t-sm">
           <textarea
             className="flex-1 p-2 w-full h-12 md:h-20 resize-none text-sm text-black dark:text-white placeholder:text-muted-foreground focus:outline-none focus:ring-0 focus:ring-transparent scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent"
             placeholder="Type your message..."

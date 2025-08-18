@@ -117,7 +117,7 @@ export default function AppSidebar() {
         {/* Settings */}
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild variant={"outline"}>
               <Link to={settingsItem.url}>
                 <settingsItem.icon className="h-4 w-4" />
                 <span>{settingsItem.title}</span>
@@ -128,10 +128,10 @@ export default function AppSidebar() {
       </Sidebar>
 
       {/* Main content */}
+      <div className="relative inline">
+        <SidebarTrigger className="m-1 absolute" />
+      </div>
       <main className="flex-1">
-        <div className="relative inline">
-          <SidebarTrigger className="absolute bg-white dark:bg-gray-900" />
-        </div>
         <Outlet />
       </main>
     </SidebarProvider>

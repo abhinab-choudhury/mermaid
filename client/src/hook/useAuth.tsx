@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function useAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const login = () => setIsAuthenticated(true);
   const logout = () => setIsAuthenticated(false);

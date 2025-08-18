@@ -56,7 +56,7 @@ function App() {
     <>
       <ThemeProvider>
         <RouterProvider router={router} />
-        <div className="absolute flex gap-3 top-5 right-3 z-10">
+        <div className="absolute flex gap-1 top-2 right-1 z-10">
           <SignInBtn />
           <ModeToggle />
         </div>
